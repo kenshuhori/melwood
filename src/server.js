@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://test:pass@mongo:27017/example');
+mongoose.connect('mongodb://test:pass@mongo:27017/');
 
 const Todo = mongoose.model('Todo', {
     text : String

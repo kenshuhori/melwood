@@ -16,7 +16,7 @@ services:
       - app-network
 
   db:
-    image: mongo:latest
+    image: mongo:4.2.5-bionic
     container_name: melwood_db
     ports:
       - 27018:27017
