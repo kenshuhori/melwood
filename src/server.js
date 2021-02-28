@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost/mydb');
+mongoose.connect('mongodb://test:pass@mongo:27017/example');
 
 const Todo = mongoose.model('Todo', {
     text : String
@@ -40,7 +40,7 @@ app.delete('/api/todos/:todo_id', (req, res) => {
             _id : req.params.todo_id
         })
         .then((todo) => {
-           res.send(todo); 
+           res.send(todo);
         })
         .catch((err) => {
             res.send(err);
@@ -51,6 +51,6 @@ app.get('/', (req, res) => {
     res.sendfile('./public/index.html');
 });
 
-app.listen(3000, () => {
-    console.log("My app listening on port 3000!");
+app.listen(8080, () => {
+    console.log("My app listening on port 8080!");
 });

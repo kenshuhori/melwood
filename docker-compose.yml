@@ -1,11 +1,25 @@
 version: '3'
 
 services:
+  app:
+    build: ./src
+    container_name: melwood_app
+    ports:
+      - 8088:8080
+    working_dir: /app
+    tty: true
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app
+    networks:
+      - app-network
+
   db:
     image: mongo:latest
     container_name: melwood_db
-    # ports:
-    #   - 27017:27017
+    ports:
+      - 27018:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
@@ -14,20 +28,6 @@ services:
       - ./data/db:/data/db
     command:
       - mongod
-    networks:
-      - app-network
-
-  app:
-    build: ./src
-    container_name: melwood_app
-    ports:
-      - 8081:8080
-    working_dir: /app
-    tty: true
-    depends_on:
-      - db
-    volumes:
-      - ./src:/app
     networks:
       - app-network
 
