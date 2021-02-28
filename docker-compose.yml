@@ -25,7 +25,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     volumes:
-      - ./data/db:/data/db
+      - ./data/db:/var/lib/mongodb
     command:
       - mongod
     networks:
