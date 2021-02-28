@@ -4,21 +4,33 @@ services:
   db:
     image: mongo:latest
     container_name: melwood_db
-    ports:
-      - 27017:27017
-    restart: always
-    volumes:
-      - ./mongo:/data/db
+    # ports:
+    #   - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      - ./data/db:/data/db
+    command:
+      - mongod
+    networks:
+      - app-network
 
   app:
-    build: ./
+    build: ./src
     container_name: melwood_app
     ports:
-      - "8081:8080"
-    restart: always
-    working_dir: /usr/src/app
+      - 8081:8080
+    working_dir: /app
+    tty: true
     depends_on:
       - db
+    volumes:
+      - ./src:/app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
