@@ -19,6 +19,7 @@
   "homepage": "https://github.com/kenshuhori/melwood#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.11.18",
+    "tesseract.js": "^2.1.4"
   }
 }
