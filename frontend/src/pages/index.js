@@ -54,11 +54,27 @@ const Home = () => {
         <h1 className={styles.title}>Welcome to OCR Web App</h1>
         <main>
           {previewImage && (
-            <img style={styles.previewImage} src={previewImage} />
+            <div className={styles.previewImage}>
+              <img className={styles.previewImg} src={previewImage} />
+            </div>
           )}
-          <br />
-          <input type="file" onChange={(e) => changeImage(e)} />
-          <button onClick={() => handleClick()}>画像解析</button>
+          <div className={styles.buttons__container}>
+            <input
+              className={styles.fileButton}
+              type="file"
+              id="fileButton"
+              onChange={(e) => changeImage(e)}
+            />
+            <label className={styles.fileButtonLabel} htmlFor="fileButton">
+              ファイルを選択する
+            </label>
+            <button
+              className={styles.analysisButton}
+              onClick={() => handleClick()}
+            >
+              画像解析
+            </button>
+          </div>
           <div>{ocrText}</div>
         </main>
 
