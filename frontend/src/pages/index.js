@@ -31,6 +31,8 @@ const Home = () => {
   const [ocrText, setOcrText] = useState();
   const [previewImage, setPreviewImage] = useState();
 
+  const isFileSet = file ? true : false;
+
   const worker = createWorker({
     logger: (m) => console.log(m),
   });
@@ -50,6 +52,7 @@ const Home = () => {
   const changeImage = (e) => {
     setFile(e.target.files[0]);
     setPreviewImage(window.URL.createObjectURL(e.target.files[0]));
+    // 一度画像を選択した状態で、 「再度ファイルを選択する」をクリック→キャンセルするとエラーが起きる。
   };
 
   const handleClick = async () => {
@@ -67,12 +70,18 @@ const Home = () => {
 
       <ContentWrapper>
         <h1 className={styles.title}>Welcome to OCR Web App</h1>
+
         <main>
-          {previewImage && (
+          {previewImage ? (
             <div className={styles.previewImage}>
               <img className={styles.previewImg} src={previewImage} />
             </div>
+          ) : (
+            <div className={styles.conceptImage}>
+              <img className={styles.conceptImg} src="background-image.svg" />
+            </div>
           )}
+
           <div className={styles.buttons__container}>
             <input
               className={styles.fileButton}
@@ -86,6 +95,7 @@ const Home = () => {
             <button
               className={styles.analysisButton}
               onClick={() => handleClick()}
+              disabled={!isFileSet}
             >
               画像解析
             </button>

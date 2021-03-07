@@ -1,3 +1,11 @@
+.conceptImage {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.conceptImg {
+  height: 600px;
+}
+
 .title {
   margin: 0;
   line-height: 1.15;
@@ -6,18 +14,23 @@
 }
 
 .previewImage {
-  margin: 0 auto;
-  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  text-align: center;
   max-height: 600px;
-  background: #fff;
+  background: rgb(99 91 255 / 39%);
   border-radius: 5px;
+  padding: 30px;
 }
 .previewImg {
+  max-width: 540px; // 600px - padding
+  max-height: 540px; // 600px - padding
+  box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
 }
 
 .buttons__container {
   display: flex;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .fileButtonLabel,
@@ -27,9 +40,20 @@
   height: 2.81rem;
   line-height: 2.8rem;
   border-radius: 7px;
-  background-color: #0070f3;
-  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+  background-color: #635bff;
+  box-shadow: 0 4px 14px 0 rgb(99 91 255 / 39%);
   color: white;
+  transition: 0.25s ease-in;
+
+  &:hover {
+    box-shadow: 0 6px 24px 0 rgb(99 91 255 / 55%);
+  }
+}
+
+.analysisButton:disabled {
+  background-color: #ccc;
+  box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+  cursor: default;
 }
 
 .fileButton {
@@ -44,6 +68,11 @@
   border-radius: 7px;
   background-color: #fff;
   box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
-  color: #696969;
+  color: #635bff;
   cursor: pointer;
+  transition: 0.25s ease-in;
+
+  &:hover {
+    box-shadow: 0 4px 14px 0 rgb(99 91 255 / 39%);
+  }
 }
