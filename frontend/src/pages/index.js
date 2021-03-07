@@ -69,7 +69,10 @@ const Home = () => {
       </Head>
 
       <ContentWrapper>
-        <h1 className={styles.title}>Welcome to OCR Web App</h1>
+        <h1 className={styles.title}>Fundamentals</h1>
+        <p className={styles.description}>
+          決算書のPDFファイルをアップロードするだけで、1つのウィンドウで投資研究に必要なデータをご提供します。何十ものウェブサイト、ニュースレター、雑誌を何時間もかけて読む必要はありません。
+        </p>
 
         <main>
           {previewImage ? (
@@ -103,7 +106,7 @@ const Home = () => {
           <div>{ocrText}</div>
         </main>
 
-        <h2>Graphs</h2>
+        {/* <h2>Graphs</h2> */}
         {/* <div style={{ display: "flex" }}>
           {data &&
             data.map((item, i) => {

@@ -1,23 +1,27 @@
 .conceptImage {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 .conceptImg {
-  height: 600px;
+  height: 400px;
 }
 
 .title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+  color: #635bff;
+  margin: 1rem 0 1.5rem;
+  font-size: 3.5rem;
   text-align: center;
+}
+.description {
+  margin-bottom: 2rem;
+  padding: 0 2.5rem;
 }
 
 .previewImage {
   margin: 0 auto 1.5rem;
   text-align: center;
   max-height: 600px;
-  background: rgb(99 91 255 / 39%);
+  background: rgb(99 91 255 / 10%);
   border-radius: 5px;
   padding: 30px;
 }
@@ -37,7 +41,7 @@
 .analysisButton {
   margin: 0;
   padding: 0 3.5rem;
-  height: 2.81rem;
+  height: 2.8rem;
   line-height: 2.8rem;
   border-radius: 7px;
   background-color: #635bff;
