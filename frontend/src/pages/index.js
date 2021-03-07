@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { createWorker } from "tesseract.js";
 import { ColumnChart } from "src/components/ColumnChart";
+import { ContentWrapper } from "src/components/ContentWrapper";
 
 const data = [
   { 売上高: [4502267, 4802062] },
@@ -48,27 +49,29 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Welcome to OCR Web App</h1>
-      <main>
-        {previewImage && (
-          <img
-            style={{ maxWidth: "500px", margin: "0 auto" }}
-            src={previewImage}
-          />
-        )}
-        <br />
-        <input type="file" onChange={(e) => changeImage(e)} />
-        <button onClick={() => handleClick()}>画像解析</button>
-        <div>{ocrText}</div>
-      </main>
+      <ContentWrapper>
+        <h1>Welcome to OCR Web App</h1>
+        <main>
+          {previewImage && (
+            <img
+              style={{ maxWidth: "500px", margin: "0 auto" }}
+              src={previewImage}
+            />
+          )}
+          <br />
+          <input type="file" onChange={(e) => changeImage(e)} />
+          <button onClick={() => handleClick()}>画像解析</button>
+          <div>{ocrText}</div>
+        </main>
 
-      <h2>Graphs</h2>
-      <div style={{ display: "flex", maxWidth: 900 }}>
-        {data &&
-          data.map((item, i) => {
-            return <ColumnChart item={item} key={`column-chart-${i}`} />;
-          })}
-      </div>
+        <h2>Graphs</h2>
+        <div style={{ display: "flex", maxWidth: 900 }}>
+          {data &&
+            data.map((item, i) => {
+              return <ColumnChart item={item} key={`column-chart-${i}`} />;
+            })}
+        </div>
+      </ContentWrapper>
     </div>
   );
 };
