@@ -13,3 +13,8 @@ node-jsでアプリを作るために作成。
 個人投資家のファンダメンタル分析用のアプリケーションを作成する。
 決算書のBSやPLに対してOCRを実施し、各種データを保存。
 それらをもとにチャートやグラフを表示し、ファンダメンタル分析を視覚的にフォローするアプリ。
+
+# How To Use teseract.js
+1. cd src/public
+2. node image.js sample.png
+3. sample.pngに記載の日本語が出力されることを確認
