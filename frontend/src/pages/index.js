@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { createWorker } from "tesseract.js";
-import { Chart } from "react-google-charts";
+import { ColumnChart } from "src/components/ColumnChart";
 
 const data = [
   { 売上高: [4502267, 4802062] },
@@ -9,37 +9,7 @@ const data = [
   { 売上総利益: [2735903, 3028387] },
 ];
 
-const GoogleChart = (props) => {
-  const title = Object.keys(props.item)[0];
-
-  console.log(props.item[title]);
-  return (
-    <Chart
-      width={400}
-      height={300}
-      chartType="ColumnChart"
-      loader={<div>グラフ描画中...</div>}
-      data={[
-        ["？？？", "前年度", "今年度"],
-        ["", props.item[title][0], props.item[title][1]],
-      ]}
-      options={{
-        title: title,
-        chartArea: { width: "30%" },
-        hAxis: {
-          title: "",
-          minValue: 0,
-        },
-        vAxis: {
-          title: "",
-        },
-      }}
-      legendToggle
-    />
-  );
-};
-
-const IndexPage = () => {
+const Home = () => {
   const [file, setFile] = useState();
   const [ocrText, setOcrText] = useState();
   const [previewImage, setPreviewImage] = useState();
@@ -96,11 +66,11 @@ const IndexPage = () => {
       <div style={{ display: "flex", maxWidth: 900 }}>
         {data &&
           data.map((item, i) => {
-            return <GoogleChart item={item} key={`google-chart-${i}`} />;
+            return <ColumnChart item={item} key={`column-chart-${i}`} />;
           })}
       </div>
     </div>
   );
 };
 
-export default IndexPage;
+export default Home;
