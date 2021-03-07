@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import styles from "src/styles/Home.module.scss";
 import { createWorker } from "tesseract.js";
 import { ColumnChart } from "src/components/ColumnChart";
 import { ContentWrapper } from "src/components/ContentWrapper";
@@ -50,13 +51,10 @@ const Home = () => {
       </Head>
 
       <ContentWrapper>
-        <h1>Welcome to OCR Web App</h1>
+        <h1 className={styles.title}>Welcome to OCR Web App</h1>
         <main>
           {previewImage && (
-            <img
-              style={{ maxWidth: "500px", margin: "0 auto" }}
-              src={previewImage}
-            />
+            <img style={styles.previewImage} src={previewImage} />
           )}
           <br />
           <input type="file" onChange={(e) => changeImage(e)} />
@@ -65,7 +63,7 @@ const Home = () => {
         </main>
 
         <h2>Graphs</h2>
-        <div style={{ display: "flex", maxWidth: 900 }}>
+        <div style={{ display: "flex" }}>
           {data &&
             data.map((item, i) => {
               return <ColumnChart item={item} key={`column-chart-${i}`} />;

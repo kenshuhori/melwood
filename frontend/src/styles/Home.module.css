@@ -1,0 +1,14 @@
+.title {
+  font-size: 4rem;
+  line-height: 1.4;
+}
+
+.previewImage {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.button {
+  border: 1px solid #000;
+  background: #fff;
+}
