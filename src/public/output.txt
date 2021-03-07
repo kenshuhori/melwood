@@ -1,0 +1,3 @@
+Google 製 0CR ラ イ ブ ラ リ の `Tesseract』 を
+Emscripten で ラ ッ プ し た `Tesseract.js」』 で
+日 本 語 0CR 試 し て み る
