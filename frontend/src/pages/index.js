@@ -4,11 +4,26 @@ import styles from "src/styles/Home.module.scss";
 import { createWorker } from "tesseract.js";
 import { ColumnChart } from "src/components/ColumnChart";
 import { ContentWrapper } from "src/components/ContentWrapper";
+import testData from "src/utils/testData.json";
 
-const data = [
-  { 売上高: [4502267, 4802062] },
-  { 売上原価: [1766363, 1773675] },
-  { 売上総利益: [2735903, 3028387] },
+// メモ：PDFからデータを読み込むにあたって、下記の対応が必要
+// 1. 「△」 を 「マイナス」に変換
+// 2. 該当なしを表す「ー」を 「null」あるいは「0」に変換
+
+const totalAssets = testData["資産の部"]["資産合計"];
+const totalLiabilities = testData["負債の部"]["負債合計"];
+const totalEquities = testData["純資産の部"]["純資産合計"];
+
+const currentAssets = testData["資産の部"]["流動資産"]["流動資産合計"];
+const currentLiabilities = testData["負債の部"]["流動負債"]["流動負債合計"];
+
+const nonCurrentAssets = [
+  totalAssets[0] - currentAssets[0],
+  totalAssets[1] - currentAssets[1],
+];
+const nonCurrentLiabilities = [
+  totalLiabilities[0] - currentLiabilities[0],
+  totalLiabilities[1] - currentLiabilities[1],
 ];
 
 const Home = () => {
@@ -79,12 +94,12 @@ const Home = () => {
         </main>
 
         <h2>Graphs</h2>
-        <div style={{ display: "flex" }}>
+        {/* <div style={{ display: "flex" }}>
           {data &&
             data.map((item, i) => {
               return <ColumnChart item={item} key={`column-chart-${i}`} />;
             })}
-        </div>
+        </div> */}
       </ContentWrapper>
     </div>
   );
