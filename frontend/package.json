@@ -12,6 +12,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-google-charts": "^3.0.15",
+    "react-loading": "^2.0.3",
     "sass": "^1.32.8",
     "tesseract.js": "^2.1.4"
   }
