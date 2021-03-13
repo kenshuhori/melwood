@@ -1,6 +1,7 @@
 //. pdf-sample.js
 var fs = require( 'fs' ),
     pdf = require( 'pdf-parse' );
+const { isNumber } = require('util');
 
 // default render callback
 function render_page(pageData) {
@@ -16,10 +17,16 @@ function render_page(pageData) {
   .then(function(textContent) {
     let lastY, text = '';
     for (let item of textContent.items) {
-      console.log(item.str)
+      pure_str = item.str.split(',').join('');
+      console.log(pure_str)
+      console.log(isNaN(Number(pure_str)) == false)
+      console.log(pure_str == '―')
+      if (isNaN(Number(pure_str)) == false || pure_str == '―' || pure_str.charAt(0) == '△') {
+        item.str = ' ' + item.str;
+      }
       if (lastY == item.transform[5] || !lastY) {
         text += item.str;
-      } else {
+      } else if (item.str) {
         text += '\n' + item.str;
       }
       lastY = item.transform[5];
