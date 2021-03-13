@@ -4,9 +4,13 @@ import { useRef } from "react";
 import styles from "src/styles/Home.module.scss";
 import { createWorker } from "tesseract.js";
 import { ColumnChart } from "src/components/ColumnChart";
-import { ContentWrapper } from "src/components/ContentWrapper";
+import { Header } from "src/components/Header";
+import {
+  ContentWrapper,
+  WideContentWrapper,
+} from "src/components/ContentWrapper";
 import testData from "src/utils/testData.json";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 
 // メモ：PDFからデータを読み込むにあたって、下記の対応が必要
 // 1. 「△」 を 「マイナス」に変換
@@ -35,7 +39,7 @@ const Home = () => {
 
   const ocrTextRef = useRef();
   const Loading = ({ type, color }) => (
-      <ReactLoading type={type} color={color} height={100} width={200} />
+    <ReactLoading type={type} color={color} height={100} width={200} />
   );
 
   const isFileSet = file ? true : false;
@@ -65,71 +69,114 @@ const Home = () => {
   const handleClick = async () => {
     if (!file) return;
     setOcrText("OCR解析中...");
-    ocrTextRef.current.scrollIntoView({ behavior: 'smooth' });
+    ocrTextRef.current.scrollIntoView({ behavior: "smooth" });
     await getTextByOCR();
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>OCR Web App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ContentWrapper>
-        <h1 className={styles.title}>Fundamentals</h1>
-        <p className={styles.description}>
-          決算書のPDFファイルをアップロードするだけで、1つのウィンドウで投資研究に必要なデータをご提供します。何十ものウェブサイト、ニュースレター、雑誌を何時間もかけて読む必要はありません。
-        </p>
+      <section className={styles.homeContainer}>
+        <ContentWrapper>
+          <Header />
+          <h1 className={styles.title}>Fundamentals</h1>
+          <p className={styles.description}>
+            決算書のPDFファイルをアップロードするだけで、1つのウィンドウで投資研究に必要なデータをご提供します。何十ものウェブサイト、ニュースレター、雑誌を何時間もかけて読む必要はありません。
+          </p>
 
-        <main>
-          {previewImage ? (
-            <div className={styles.previewImage}>
-              <img className={styles.previewImg} src={previewImage} />
-            </div>
-          ) : (
-            <div className={styles.conceptImage}>
-              <img className={styles.conceptImg} src="background-image.svg" />
-            </div>
-          )}
-
-          <div className={styles.buttons__container}>
-            <input
-              className={styles.fileButton}
-              type="file"
-              id="fileButton"
-              onChange={(e) => changeImage(e)}
-            />
-            <label className={styles.fileButtonLabel} htmlFor="fileButton">
-              ファイルを選択する
-            </label>
-            <button
-              className={styles.analysisButton}
-              onClick={() => handleClick()}
-              disabled={!isFileSet}
-            >
-              画像解析
-            </button>
-          </div>
-          <div className={styles.ocrResult} ref={ocrTextRef}>
-            {ocrText}
-            {ocrText == 'OCR解析中...' ? (
-              <Loading type='bubbles' color='#888888' />
+          <main>
+            {previewImage ? (
+              <div className={styles.previewImage}>
+                <img className={styles.previewImg} src={previewImage} />
+              </div>
             ) : (
-              <div></div>
+              <div className={styles.conceptImage}>
+                <img className={styles.conceptImg} src="concept-image.svg" />
+              </div>
             )}
-          </div>
-        </main>
 
-        {/* <h2>Graphs</h2> */}
-        {/* <div style={{ display: "flex" }}>
-          {data &&
-            data.map((item, i) => {
-              return <ColumnChart item={item} key={`column-chart-${i}`} />;
-            })}
-        </div> */}
-      </ContentWrapper>
-    </div>
+            <div className={styles.buttons__container}>
+              <input
+                className={styles.fileButton}
+                type="file"
+                id="fileButton"
+                onChange={(e) => changeImage(e)}
+              />
+              <label className={styles.fileButtonLabel} htmlFor="fileButton">
+                ファイルを選択する
+              </label>
+              <button
+                className={styles.analysisButton}
+                onClick={() => handleClick()}
+                disabled={!isFileSet}
+              >
+                画像解析
+              </button>
+            </div>
+            <div className={styles.ocrResult} ref={ocrTextRef}>
+              {ocrText}
+              {ocrText == "OCR解析中..." ? (
+                <Loading type="bubbles" color="#888888" />
+              ) : (
+                <div></div>
+              )}
+            </div>
+          </main>
+        </ContentWrapper>
+      </section>
+
+      <section className={styles.contentContainer}>
+        <ContentWrapper>
+          {/* グラフの左端に合わせたい */}
+          <h3 className={styles.content__title}>Analyzing</h3>
+        </ContentWrapper>
+        <WideContentWrapper>
+          {/* グラフで必要なデータを props に渡す。component で切り出して map で展開する。  */}
+          <div className={styles.graphs}>
+            <div className={styles.graph}>
+              <img
+                src="/dummy/graph1.png"
+                alt="グラフに差し替える（現在はダミー画像）"
+              />
+            </div>
+            <div className={styles.graph}>
+              <img
+                src="/dummy/graph2.png"
+                alt="グラフに差し替える（現在はダミー画像）"
+              />
+            </div>
+            <div className={styles.graph}>
+              <img
+                src="/dummy/graph3.png"
+                alt="グラフに差し替える（現在はダミー画像）"
+              />
+            </div>
+            <div className={styles.graph}>
+              <img
+                src="/dummy/graph4.png"
+                alt="グラフに差し替える（現在はダミー画像）"
+              />
+            </div>
+            <div className={styles.graph}>
+              <img
+                src="/dummy/graph5.png"
+                alt="グラフに差し替える（現在はダミー画像）"
+              />
+            </div>
+            <div className={styles.graph}>
+              <img
+                src="/dummy/graph6.png"
+                alt="グラフに差し替える（現在はダミー画像）"
+              />
+            </div>
+          </div>
+        </WideContentWrapper>
+      </section>
+    </>
   );
 };
 

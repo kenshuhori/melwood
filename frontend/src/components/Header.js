@@ -6,7 +6,7 @@ export const Header = () => {
     <ContentWrapper>
       <header className={styles.header}>
         <div className={styles.header__inner}>
-          <img width={15} src="f.svg" style={{ marginRight: "10px" }} />
+          <img width={15} src="f.svg" />
           <span>Fundamentals</span>
         </div>
       </header>
