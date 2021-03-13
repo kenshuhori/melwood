@@ -6,6 +6,7 @@ import { createWorker } from "tesseract.js";
 import { ColumnChart } from "src/components/ColumnChart";
 import { ContentWrapper } from "src/components/ContentWrapper";
 import testData from "src/utils/testData.json";
+import ReactLoading from 'react-loading';
 
 // メモ：PDFからデータを読み込むにあたって、下記の対応が必要
 // 1. 「△」 を 「マイナス」に変換
@@ -33,6 +34,9 @@ const Home = () => {
   const [previewImage, setPreviewImage] = useState();
 
   const ocrTextRef = useRef();
+  const Loading = ({ type, color }) => (
+      <ReactLoading type={type} color={color} height={100} width={200} />
+  );
 
   const isFileSet = file ? true : false;
 
@@ -109,6 +113,11 @@ const Home = () => {
           </div>
           <div className={styles.ocrResult} ref={ocrTextRef}>
             {ocrText}
+            {ocrText == 'OCR解析中...' ? (
+              <Loading type='bubbles' color='#888888' />
+            ) : (
+              <div></div>
+            )}
           </div>
         </main>
 
