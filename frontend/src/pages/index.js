@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import { useRef } from "react";
 import styles from "src/styles/Home.module.scss";
 import { createWorker } from "tesseract.js";
 import { ColumnChart } from "src/components/ColumnChart";
@@ -31,6 +32,8 @@ const Home = () => {
   const [ocrText, setOcrText] = useState();
   const [previewImage, setPreviewImage] = useState();
 
+  const ocrTextRef = useRef();
+
   const isFileSet = file ? true : false;
 
   const worker = createWorker({
@@ -58,6 +61,7 @@ const Home = () => {
   const handleClick = async () => {
     if (!file) return;
     setOcrText("OCR解析中...");
+    ocrTextRef.current.scrollIntoView({ behavior: 'smooth' });
     await getTextByOCR();
   };
 
@@ -103,7 +107,9 @@ const Home = () => {
               画像解析
             </button>
           </div>
-          <div>{ocrText}</div>
+          <div className={styles.ocrResult} ref={ocrTextRef}>
+            {ocrText}
+          </div>
         </main>
 
         {/* <h2>Graphs</h2> */}
