@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 const obj = {
@@ -52,6 +53,8 @@ const obj = {
   },
   負債純資産合計: [4604239, 4966650],
 };
+
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json(obj);

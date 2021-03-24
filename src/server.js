@@ -1,56 +1,51 @@
-const express  = require('express');
+const express = require("express");
+const cors = require("cors");
 const app = express();
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const path = require("path");
+const multer = require("multer");
 
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
-
-mongoose.connect('mongodb://test:pass@db:27017');
-
-const Todo = mongoose.model('Todo', {
-    text : String
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function (req, file, cb) {
+    cb(null, "IMAGE-", Date.now() + path.extname(file.originalname));
+    // extname: 拡張子
+  },
 });
 
-app.get('/api/todos', (req, res) => {
-    Todo.find()
-        .then((todos) => {
-            res.json(todos);
-        })
-        .catch((err) => {
-            res.send(err);
-        })
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+}).single("myImage");
+
+const { getData } = require("./public/pdf_spike");
+
+// const mongoose = require('mongoose');
+// const bodyParser = require('body-parser');
+// app.use(express.static(__dirname + '/public'));
+// app.use(bodyParser.json());
+// mongoose.connect('mongodb://test:pass@db:27017');
+
+app.use(cors());
+
+// app.post("/", (req, res) => {
+//   console.log("----------");
+//   console.log(req);
+//   console.log("----------");
+//   res.json({ message: "success" });
+// });
+
+app.post("/", {
+  upload((req, res, err) => {
+    console.log("Request ----", req.body);
+    console.log("Request ---file", req.file)
+    if(!eff) {
+      return res.send(200).end()
+    }
+  })
+})
+
+app.listen(4000, () => {
+  console.log(" 4000 でサーバー立ち上げ中....");
 });
 
-app.post('/api/todos', (req, res) => {
-    const todo = req.body;
-    Todo.create({
-            text : todo.text,
-        })
-        .then((todo) => {
-            res.json(todo);
-        })
-        .catch((err) => {
-            res.send(err);
-        });
-});
-
-app.delete('/api/todos/:todo_id', (req, res) => {
-    Todo.remove({
-            _id : req.params.todo_id
-        })
-        .then((todo) => {
-           res.send(todo);
-        })
-        .catch((err) => {
-            res.send(err);
-        });
-});
-
-app.get('/', (req, res) => {
-    res.sendfile('./public/index.html');
-});
-
-app.listen(8080, () => {
-    console.log("My app listening on port 8080!");
-});
+// getData();

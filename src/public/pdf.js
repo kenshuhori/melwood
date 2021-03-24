@@ -48,7 +48,7 @@ let options = {
 };
 
 // 直接ファイル名を指定してみる
-const filename = "../pdf/nissan.pdf";
+const filename = "./../pdf/nissan.pdf";
 let buf = fs.readFileSync(filename);
 pdf(buf, options)
   .then((data) => {
