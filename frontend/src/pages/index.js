@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRef } from "react";
 import styles from "src/styles/Home.module.scss";
 import { createWorker } from "tesseract.js";
+import { Chart } from "react-google-charts";
 import { ColumnChart } from "src/components/ColumnChart";
 import { Header } from "src/components/Header";
 import {
@@ -11,6 +12,7 @@ import {
 } from "src/components/ContentWrapper";
 import testData from "src/utils/testData.json";
 import ReactLoading from "react-loading";
+import axios from "axios";
 
 // メモ：PDFからデータを読み込むにあたって、下記の対応が必要
 // 1. 「△」 を 「マイナス」に変換
@@ -32,21 +34,54 @@ const nonCurrentLiabilities = [
   totalLiabilities[1] - currentLiabilities[1],
 ];
 
+const currentRatio = [
+  currentAssets[0] / currentLiabilities[0],
+  currentAssets[1] / currentLiabilities[1],
+];
+
 const Home = () => {
   const [file, setFile] = useState();
   const [ocrText, setOcrText] = useState();
   const [previewImage, setPreviewImage] = useState();
-
+  const chartRef = useRef();
   const ocrTextRef = useRef();
   const Loading = ({ type, color }) => (
     <ReactLoading type={type} color={color} height={100} width={200} />
   );
-
   const isFileSet = file ? true : false;
 
   const worker = createWorker({
     logger: (m) => console.log(m),
   });
+
+  useEffect(() => {
+    console.log(chartRef.current);
+  }, []);
+
+  const postRequest = async () => {
+    if (!isFileSet) return;
+    const formData = new FormData();
+
+    axios({
+      method: "POST",
+      url: "http://localhost:4000",
+      data: { file },
+      config: {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    })
+      .then((res) => {
+        console.log("ファイル送信成功！！！");
+
+        // 決算データのオブジェクトを受け取って、setStateする
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getTextByOCR = async () => {
     await worker.load();
@@ -103,6 +138,7 @@ const Home = () => {
               <input
                 className={styles.fileButton}
                 type="file"
+                name="myImage"
                 id="fileButton"
                 onChange={(e) => changeImage(e)}
               />
@@ -111,7 +147,8 @@ const Home = () => {
               </label>
               <button
                 className={styles.analysisButton}
-                onClick={() => handleClick()}
+                onClick={() => postRequest()}
+                // onClick={() => handleClick()}
                 disabled={!isFileSet}
               >
                 画像解析
@@ -138,17 +175,47 @@ const Home = () => {
           {/* グラフで必要なデータを props に渡す。component で切り出して map で展開する。  */}
           <div className={styles.graphs}>
             <div className={styles.graph}>
-              <img
-                src="/dummy/graph1.png"
-                alt="グラフに差し替える（現在はダミー画像）"
-              />
+              <ColumnChart title="流動比率" data={currentRatio} />
             </div>
             <div className={styles.graph}>
-              <img
-                src="/dummy/graph2.png"
-                alt="グラフに差し替える（現在はダミー画像）"
+              <Chart
+                ref={chartRef}
+                maxWidth={400}
+                maxHeight={300}
+                chartType="AreaChart"
+                loader={<div>描画中...</div>}
+                data={[
+                  ["x", "dogs"],
+                  [0, 0],
+                  [1, 10],
+                  [2, 23],
+                  [3, 17],
+                  [4, 18],
+                  [5, 9],
+                  [6, 11],
+                  [7, 27],
+                ]}
+                options={{
+                  legend: "none",
+                  hAxis: {
+                    title: "Time",
+                  },
+                  vAxis: {
+                    title: "Popularity",
+                  },
+                  pointSize: 20,
+                  series: {
+                    0: {
+                      pointShape: "circle",
+                      color: "red",
+                      lineWidth: "2",
+                      curveType: "function",
+                    },
+                  },
+                }}
               />
             </div>
+
             <div className={styles.graph}>
               <img
                 src="/dummy/graph3.png"
