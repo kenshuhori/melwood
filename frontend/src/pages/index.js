@@ -83,10 +83,6 @@ const Home = () => {
     logger: (m) => console.log(m),
   });
 
-  useEffect(() => {
-    console.log(chartRef.current);
-  }, []);
-
   const postRequest = async () => {
     if (!isFileSet) return;
     const formData = new FormData();

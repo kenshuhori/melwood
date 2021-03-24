@@ -102,46 +102,38 @@ function netAssetBuilder(text) {
   return new NetAsset(amount_net_asset);
 }
 
-exports.getData = function () {
-  let balanceSheetObject;
-  if (process.argv.length > 1) {
-    // var filename = process.argv[2];
-    var filename = "pdf/nissan2.pdf";
-    var buf = fs.readFileSync(filename);
+exports.getData = async function () {
+  return new Promise((resolve, reject) => {
+    let balanceSheetObject;
+    if (process.argv.length > 1) {
+      var filename = "pdf/nissan2.pdf";
+      var buf = fs.readFileSync(filename);
+      pdf(buf, options)
+        .then(function (data) {
+          var text = data.text.trim();
+          const asset = assetBuilder(text);
+          const liability = liabilityBuilder(text);
+          const net_asset = netAssetBuilder(text);
 
-    console.log("pdf");
-    pdf(buf, options)
-      .then(function (data) {
-        var text = data.text.trim();
-        const asset = assetBuilder(text);
-        const liability = liabilityBuilder(text);
-        const net_asset = netAssetBuilder(text);
+          balanceSheetObject = {
+            流動資産合計: asset.amount_current_asset,
+            固定資産合計: asset.amount_fixed_asset,
+            資産合計: asset.amount_all_asset,
+            流動負債合計: liability.amount_current_liability,
+            固定負債合計: liability.amount_fixed_liability,
+            負債合計: liability.amount_all_liability,
+            純資産合計: net_asset.amount_net_asset,
+          };
 
-        // console.log(`流動資産合計 : ${asset.amount_current_asset}`);
-        // console.log(`固定資産合計 : ${asset.amount_fixed_asset}`);
-        // console.log(`資産合計 : ${asset.amount_all_asset}`);
-        // console.log(`流動負債合計 : ${liability.amount_current_liability}`);
-        // console.log(`固定負債合計 : ${liability.amount_fixed_liability}`);
-        // console.log(`負債合計 : ${liability.amount_all_liability}`);
-        // console.log(`純資産合計 : ${net_asset.amount_net_asset}`);
-
-        balanceSheetObject = {
-          流動資産合計: asset.amount_current_asset,
-          固定資産合計: asset.amount_fixed_asset,
-          資産合計: asset.amount_all_asset,
-          流動負債合計: liability.amount_current_liability,
-          固定負債合計: liability.amount_fixed_liability,
-          負債合計: liability.amount_all_liability,
-          純資産合計: net_asset.amount_net_asset,
-        };
-
-        console.log(balanceSheetObject);
-        return balanceSheetObject;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  } else {
-    console.log("Usage: $ node pdf-sample ");
-  }
+          console.log(balanceSheetObject);
+          return resolve(balanceSheetObject);
+        })
+        .catch(function (err) {
+          console.log(err);
+          return reject(err);
+        });
+    } else {
+      console.log("Usage: $ node pdf-sample ");
+    }
+  });
 };

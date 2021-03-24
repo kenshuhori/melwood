@@ -22,11 +22,8 @@ const upload = multer({
 
 let obj;
 app.post("/", (req, res, next) => {
-  upload(req, res, (error) => {
-    const pdfSpike = async () => {
-      obj = await getData(req.file);
-    };
-    pdfSpike();
+  upload(req, res, async (error) => {
+    obj = await getData(req.file);
     console.log("obj:", obj);
   });
 });
