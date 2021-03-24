@@ -24,7 +24,7 @@ let obj;
 app.post("/", (req, res, next) => {
   upload(req, res, async (error) => {
     obj = await getData(req.file);
-    console.log("obj:", obj);
+    res.json(obj);
   });
 });
 
