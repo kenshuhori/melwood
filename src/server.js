@@ -3,6 +3,9 @@ const cors = require("cors");
 const app = express();
 const path = require("path");
 const multer = require("multer");
+const { getData } = require("./public/pdf_spike");
+
+app.use(cors());
 
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
@@ -17,35 +20,17 @@ const upload = multer({
   limits: { fileSize: 1000000 },
 }).single("myImage");
 
-const { getData } = require("./public/pdf_spike");
-
-// const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// app.use(express.static(__dirname + '/public'));
-// app.use(bodyParser.json());
-// mongoose.connect('mongodb://test:pass@db:27017');
-
-app.use(cors());
-
-// app.post("/", (req, res) => {
-//   console.log("----------");
-//   console.log(req);
-//   console.log("----------");
-//   res.json({ message: "success" });
-// });
-
-app.post("/", {
-  upload((req, res, err) => {
-    console.log("Request ----", req.body);
-    console.log("Request ---file", req.file)
-    if(!eff) {
-      return res.send(200).end()
-    }
-  })
-})
+let obj;
+app.post("/", (req, res, next) => {
+  upload(req, res, (error) => {
+    const pdfSpike = async () => {
+      obj = await getData(req.file);
+    };
+    pdfSpike();
+    console.log("obj:", obj);
+  });
+});
 
 app.listen(4000, () => {
   console.log(" 4000 でサーバー立ち上げ中....");
 });
-
-// getData();

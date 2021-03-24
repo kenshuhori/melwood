@@ -61,11 +61,12 @@ const Home = () => {
   const postRequest = async () => {
     if (!isFileSet) return;
     const formData = new FormData();
+    formData.append("myImage", file);
 
     axios({
       method: "POST",
       url: "http://localhost:4000",
-      data: { file },
+      data: formData,
       config: {
         headers: {
           "Content-Type": "multipart/form-data",
