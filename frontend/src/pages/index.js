@@ -5,6 +5,7 @@ import styles from "src/styles/Home.module.scss";
 import { createWorker } from "tesseract.js";
 import { Chart } from "react-google-charts";
 import { ColumnChart } from "src/components/ColumnChart";
+import { PiChart } from "src/components/PiChart";
 import { Header } from "src/components/Header";
 import {
   ContentWrapper,
@@ -37,6 +38,34 @@ const nonCurrentLiabilities = [
 const currentRatio = [
   currentAssets[0] / currentLiabilities[0],
   currentAssets[1] / currentLiabilities[1],
+];
+
+const assetRatio = [
+    ['Asset', 'Amount per TotalAsset'],
+    ['流動資産合計', 10136395],
+    ['固定資産合計', 5889352],
+];
+
+const liabilityRatio = [
+    ['Liability', 'Amount per TotalLiability'],
+    ['流動負債合計', 6484150],
+    ['固定負債合計', 5515057],
+];
+
+const BsRatio = [
+    ['Total', 'Amount per BS'],
+    ['負債合計', 11999207],
+    ['純資産合計', 4034076],
+    ['資産合計', 16025747],
+];
+
+const BsDetailRatio = [
+    ['Total', 'Amount per BS'],
+    ['流動負債合計', 6484150],
+    ['固定負債合計', 5515057],
+    ['純資産合計', 4034076],
+    ['固定資産合計', 5889352],
+    ['流動資産合計', 10136395],
 ];
 
 const Home = () => {
@@ -172,77 +201,20 @@ const Home = () => {
           {/* グラフの左端に合わせたい */}
           <h3 className={styles.content__title}>Analyzing</h3>
         </ContentWrapper>
-        <WideContentWrapper>
-          {/* グラフで必要なデータを props に渡す。component で切り出して map で展開する。  */}
-          <div className={styles.graphs}>
-            <div className={styles.graph}>
-              <ColumnChart title="流動比率" data={currentRatio} />
-            </div>
-            <div className={styles.graph}>
-              <Chart
-                ref={chartRef}
-                maxWidth={400}
-                maxHeight={300}
-                chartType="AreaChart"
-                loader={<div>描画中...</div>}
-                data={[
-                  ["x", "dogs"],
-                  [0, 0],
-                  [1, 10],
-                  [2, 23],
-                  [3, 17],
-                  [4, 18],
-                  [5, 9],
-                  [6, 11],
-                  [7, 27],
-                ]}
-                options={{
-                  legend: "none",
-                  hAxis: {
-                    title: "Time",
-                  },
-                  vAxis: {
-                    title: "Popularity",
-                  },
-                  pointSize: 20,
-                  series: {
-                    0: {
-                      pointShape: "circle",
-                      color: "red",
-                      lineWidth: "2",
-                      curveType: "function",
-                    },
-                  },
-                }}
-              />
-            </div>
-
-            <div className={styles.graph}>
-              <img
-                src="/dummy/graph3.png"
-                alt="グラフに差し替える（現在はダミー画像）"
-              />
-            </div>
-            <div className={styles.graph}>
-              <img
-                src="/dummy/graph4.png"
-                alt="グラフに差し替える（現在はダミー画像）"
-              />
-            </div>
-            <div className={styles.graph}>
-              <img
-                src="/dummy/graph5.png"
-                alt="グラフに差し替える（現在はダミー画像）"
-              />
-            </div>
-            <div className={styles.graph}>
-              <img
-                src="/dummy/graph6.png"
-                alt="グラフに差し替える（現在はダミー画像）"
-              />
-            </div>
+        <div className={styles.graphs}>
+          <div className={styles.graph}>
+            <PiChart title="資産の部" data={assetRatio} />
           </div>
-        </WideContentWrapper>
+          <div className={styles.graph}>
+            <PiChart title="負債の部" data={liabilityRatio} />
+          </div>
+          <div className={styles.graph}>
+            <PiChart title="貸借対照表" data={BsRatio} />
+          </div>
+          <div className={styles.graph}>
+            <PiChart title="貸借対照表（詳細）" data={BsDetailRatio} />
+          </div>
+        </div>
       </section>
     </>
   );
