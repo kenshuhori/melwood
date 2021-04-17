@@ -20,8 +20,10 @@ node-js でアプリを作るために作成。
 
 # How To Use teseract.js
 
+```sh
 1. cd src/public
-2. node image.js sample.png
-3. sample.png に記載の日本語が出力されることを確認
+2. node image.js <pdfファイル>
+3. <pdfファイル> に記載の日本語が出力されることを確認
+```
 
 # テスト

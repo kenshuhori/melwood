@@ -2,48 +2,14 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRef } from "react";
 import styles from "src/styles/Home.module.scss";
-import { createWorker } from "tesseract.js";
-import { Chart } from "react-google-charts";
-import { ColumnChart } from "src/components/ColumnChart";
 import { PiChart } from "src/components/PiChart";
 import { Header } from "src/components/Header";
-import {
-  ContentWrapper,
-  WideContentWrapper,
-} from "src/components/ContentWrapper";
-import testData from "src/utils/testData.json";
+import { ContentWrapper } from "src/components/ContentWrapper";
 import ReactLoading from "react-loading";
 import axios from "axios";
-// import { queryData } from "src/query";
-
-// メモ：PDFからデータを読み込むにあたって、下記の対応が必要
-// 1. 「△」 を 「マイナス」に変換
-// 2. 該当なしを表す「ー」を 「null」あるいは「0」に変換
-
-const totalAssets = testData["資産の部"]["資産合計"];
-const totalLiabilities = testData["負債の部"]["負債合計"];
-const totalEquities = testData["純資産の部"]["純資産合計"];
-
-const currentAssets = testData["資産の部"]["流動資産"]["流動資産合計"];
-const currentLiabilities = testData["負債の部"]["流動負債"]["流動負債合計"];
-
-const nonCurrentAssets = [
-  totalAssets[0] - currentAssets[0],
-  totalAssets[1] - currentAssets[1],
-];
-const nonCurrentLiabilities = [
-  totalLiabilities[0] - currentLiabilities[0],
-  totalLiabilities[1] - currentLiabilities[1],
-];
-
-const currentRatio = [
-  currentAssets[0] / currentLiabilities[0],
-  currentAssets[1] / currentLiabilities[1],
-];
 
 const Home = () => {
   const [file, setFile] = useState();
-  const [ocrText, setOcrText] = useState();
   const [previewImage, setPreviewImage] = useState();
   const [irObj, setIrObj] = useState();
   const chartRef = useRef();
@@ -81,10 +47,6 @@ const Home = () => {
     ["流動資産合計", irObj["流動資産合計"]],
   ];
 
-  const worker = createWorker({
-    logger: (m) => console.log(m),
-  });
-
   const postRequest = async () => {
     if (!isFileSet) return;
     const formData = new FormData();
@@ -112,35 +74,16 @@ const Home = () => {
       });
   };
 
-  const getTextByOCR = async () => {
-    await worker.load();
-    await worker.loadLanguage("eng+jpn");
-    await worker.initialize("eng+jpn");
-    const {
-      data: { text },
-    } = await worker.recognize(file);
-    await worker.terminate();
-    setOcrText(text.replace(/\s+/g, ""));
-    console.log(text);
-  };
-
   const changeImage = (e) => {
     setFile(e.target.files[0]);
     setPreviewImage(window.URL.createObjectURL(e.target.files[0]));
     // 一度画像を選択した状態で、 「再度ファイルを選択する」をクリック→キャンセルするとエラーが起きる。
   };
 
-  const handleClick = async () => {
-    if (!file) return;
-    setOcrText("OCR解析中...");
-    ocrTextRef.current.scrollIntoView({ behavior: "smooth" });
-    await getTextByOCR();
-  };
-
   return (
     <>
       <Head>
-        <title>OCR Web App</title>
+        <title>Fundamentals Web App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
