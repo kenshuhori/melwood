@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const path = require("path");
 const multer = require("multer");
-const { getData } = require("./public/pdf_spike");
+const { getData } = require("./src/pdf");
 
 app.use(cors());
 

@@ -1,9 +1,9 @@
 //. pdf-sample.js
 let fs = require("fs"),
   pdf = require("pdf-parse");
-let Asset = require("./model/asset.js");
-let Liability = require("./model/liability.js");
-let NetAsset = require("./model/net_asset.js");
+let Asset = require("../public/model/asset.js");
+let Liability = require("../public/model/liability.js");
+let NetAsset = require("../public/model/net_asset.js");
 
 // default render callback
 function render_page(pageData) {
