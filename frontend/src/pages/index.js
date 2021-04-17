@@ -14,6 +14,7 @@ import {
 import testData from "src/utils/testData.json";
 import ReactLoading from "react-loading";
 import axios from "axios";
+// import { queryData } from "src/query";
 
 // メモ：PDFからデータを読み込むにあたって、下記の対応が必要
 // 1. 「△」 を 「マイナス」に変換

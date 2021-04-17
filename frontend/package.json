@@ -17,5 +17,9 @@
     "react-loading": "^2.0.3",
     "sass": "^1.32.8",
     "tesseract.js": "^2.1.4"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^1.2.6",
+    "jest": "^26.6.3"
   }
 }
