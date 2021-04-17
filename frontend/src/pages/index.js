@@ -126,14 +126,6 @@ const Home = () => {
                 画像解析
               </button>
             </div>
-            <div className={styles.ocrResult} ref={ocrTextRef}>
-              {ocrText}
-              {ocrText == "OCR解析中..." ? (
-                <Loading type="bubbles" color="#888888" />
-              ) : (
-                <div></div>
-              )}
-            </div>
           </main>
         </ContentWrapper>
       </section>
