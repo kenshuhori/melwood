@@ -1,9 +1,9 @@
 //. pdf-sample.js
 let fs = require("fs"),
   pdf = require("pdf-parse");
-let Asset = require("../public/model/asset.js");
-let Liability = require("../public/model/liability.js");
-let NetAsset = require("../public/model/net_asset.js");
+let Asset = require("./model/asset.js");
+let Liability = require("./model/liability.js");
+let NetAsset = require("./model/net_asset.js");
 
 // default render callback
 function render_page(pageData) {
@@ -106,7 +106,7 @@ exports.getData = async function () {
   return new Promise((resolve, reject) => {
     let balanceSheetObject;
     if (process.argv.length > 1) {
-      var filename = "pdf/nissan2.pdf";
+      var filename = "../public/pdf/nissan.pdf";
       var buf = fs.readFileSync(filename);
       pdf(buf, options)
         .then(function (data) {
@@ -133,7 +133,7 @@ exports.getData = async function () {
           return reject(err);
         });
     } else {
-      console.log("Usage: $ node pdf-sample ");
+      console.log("Usage: $ node pdf.js sample.pdf ");
     }
   });
 };
