@@ -4,6 +4,7 @@ const app = express();
 const path = require("path");
 const multer = require("multer");
 const { getData } = require("./pdf");
+const { readAll, insertRow } = require("./supabase");
 
 app.use(cors());
 
@@ -30,4 +31,9 @@ app.post("/", (req, res, next) => {
 
 app.listen(4000, () => {
   console.log(" 4000 でサーバー立ち上げ中....");
+  // const supabaseTest = async () => {
+  //   users = await readAll("users");
+  //   console.log(users);
+  // };
+  // supabaseTest();
 });
