@@ -9,6 +9,8 @@ services:
     volumes:
       - ./backend/src:/app/src
       - ./backend/public:/app/public
+    env_file:
+      - ./backend/.env
     working_dir: /app
     command: npm run dev
 
