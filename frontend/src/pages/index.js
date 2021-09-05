@@ -10,6 +10,7 @@ import axios from "axios";
 
 const Home = () => {
   const [file, setFile] = useState();
+  const [ocrText, setOcrText] = useState();
   const [previewImage, setPreviewImage] = useState();
   const [irObj, setIrObj] = useState();
   const chartRef = useRef();

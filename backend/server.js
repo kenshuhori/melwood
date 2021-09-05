@@ -23,7 +23,7 @@ const upload = multer({
 let obj;
 app.post("/", (req, res, next) => {
   upload(req, res, async (error) => {
-    obj = await getData(req.file);
+    obj = await getData(req.file.path);
     res.json(obj);
   });
 });
