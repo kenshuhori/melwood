@@ -1,33 +1,27 @@
 version: '3'
 
 services:
-  app:
-    build: ./src
-    container_name: melwood_app
+  backend:
+    build: ./backend
+    container_name: melwood_backend
     ports:
-      - 8088:8080
-    working_dir: /app
+      - 4000:4000
     tty: true
-    depends_on:
-      - db
     volumes:
-      - ./src:/app
+      - ./backend:/app
+    working_dir: /app
     networks:
       - app-network
 
-  db:
-    image: mongo:4.2.5-bionic
-    container_name: melwood_db
+  frontend:
+    build: ./frontend
+    container_name: melwood_frontend
     ports:
-      - 27018:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: test
-      MONGO_INITDB_ROOT_PASSWORD: pass
-      MONGO_INITDB_DATABASE: example
+      - 3000:3000
+    tty: true
     volumes:
-      - ./data/db:/var/lib/mongodb
-    command:
-      - mongod
+      - ./frontend:/app
+    working_dir: /app
     networks:
       - app-network
 

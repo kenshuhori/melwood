@@ -102,11 +102,10 @@ function netAssetBuilder(text) {
   return new NetAsset(amount_net_asset);
 }
 
-exports.getData = async function () {
+exports.getData = async function (filename) {
   return new Promise((resolve, reject) => {
     let balanceSheetObject;
     if (process.argv.length > 1) {
-      var filename = "../public/pdf/nissan.pdf";
       var buf = fs.readFileSync(filename);
       pdf(buf, options)
         .then(function (data) {

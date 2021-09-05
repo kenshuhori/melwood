@@ -6,6 +6,9 @@ const Liability = class {
   }
 
   removeComma(number) {
+    console.log("liability-number : " + number)
+    if (!number) return 0;
+
     let removed = number.replace(/,/g, '');
     return parseInt(removed, 10);
   }
