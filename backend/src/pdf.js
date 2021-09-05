@@ -52,7 +52,7 @@ function assetBuilder(text) {
     let row = row_str.split(" ").filter((r) => r !== "");
     if (row.length == 3 && row[0] == "流動資産合計") {
       amount_current_asset = row[2];
-    } else if (row.length == 3 && row[0] == "固定資産合計") {
+    } else if (row.length == 3 && ["固定資産合計", "非流動資産合計"].includes(row[0])) {
       amount_fixed_asset = row[2];
     } else if (row.length == 3 && row[0] == category_end) {
       return true; // ループ終了
@@ -74,7 +74,7 @@ function liabilityBuilder(text) {
     let row = row_str.split(" ").filter((r) => r !== "");
     if (row.length == 3 && row[0] == "流動負債合計") {
       amount_current_liability = row[2];
-    } else if (row.length == 3 && row[0] == "固定負債合計") {
+    } else if (row.length == 3 && ["固定負債合計", "非流動負債合計"].includes(row[0])) {
       amount_fixed_liability = row[2];
     } else if (row.length == 3 && row[0] == category_end) {
       return true; // ループ終了

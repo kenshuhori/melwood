@@ -6,7 +6,6 @@ services:
     container_name: melwood_backend
     ports:
       - 4000:4000
-    tty: true
     volumes:
       - ./backend/src:/app/src
       - ./backend/public:/app/public
@@ -18,7 +17,6 @@ services:
     container_name: melwood_frontend
     ports:
       - 3000:3000
-    tty: true
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
