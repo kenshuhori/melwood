@@ -8,5 +8,7 @@ services:
       - 4000:4000
     tty: true
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
+      - ./backend/public:/app/public
     working_dir: /app
+    command: node src/server.js
