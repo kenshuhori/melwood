@@ -10,7 +10,7 @@ services:
       - ./backend/src:/app/src
       - ./backend/public:/app/public
     working_dir: /app
-    command: node src/server.js
+    command: npm run dev
 
   frontend:
     build: ./frontend
