@@ -12,3 +12,15 @@ services:
       - ./backend/public:/app/public
     working_dir: /app
     command: node src/server.js
+
+  frontend:
+    build: ./frontend
+    container_name: melwood_frontend
+    ports:
+      - 3000:3000
+    tty: true
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    working_dir: /app
+    command: npm run dev
