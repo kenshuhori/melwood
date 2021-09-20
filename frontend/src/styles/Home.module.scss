@@ -8,13 +8,13 @@
   margin-bottom: 1.5rem;
 }
 .conceptImg {
-  height: 400px;
+  height: 360px;
 }
 
 .title {
   color: #635bff;
   margin: 0 0 1rem;
-  font-size: 3.5rem;
+  font-size: 3.4rem;
   text-align: center;
 }
 .description {
@@ -25,15 +25,16 @@
 .previewImage {
   margin: 0 auto 1.5rem;
   text-align: center;
-  max-height: 600px;
+  max-height: 370px;
   background: rgb(99 91 255 / 10%);
   border-radius: 5px;
   padding: 30px;
 }
 .previewImg {
-  max-width: 540px; // 600px - padding
-  max-height: 540px; // 600px - padding
+  max-width: 320px; // 600px - padding
+  max-height: 320px; // 600px - padding
   box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+  background-color: #ffffff;
 }
 
 .buttons__container {
