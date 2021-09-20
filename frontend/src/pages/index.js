@@ -52,6 +52,7 @@ const Home = () => {
 
   const postRequest = async () => {
     if (!isFileSet) return;
+    setIrObj(null);
     setNowAnalyzing(true);
     const formData = new FormData();
     formData.append("myImage", file);
