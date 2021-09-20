@@ -4,7 +4,6 @@ const NetAsset = class {
     }
 
     removeComma(number) {
-      console.log("net-asset-number : " + number)
       if (!number) return 0;
 
       let removed = number.replace(/,/g, '');

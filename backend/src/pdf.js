@@ -24,12 +24,13 @@ function render_page(pageData) {
       ) {
         item.str = " " + item.str;
       }
-      if (lastY == item.transform[5] || !lastY) {
+      currentY = Math.round( item.transform[5] * Math.pow( 10, 2 ) ) / Math.pow( 10, 2 ); // 少数第2位まで残るように四捨五入
+      if (lastY == currentY || !lastY) {
         text += item.str;
       } else if (item.str) {
         text += "\n" + item.str;
       }
-      lastY = item.transform[5];
+      lastY = currentY;
     }
     return text;
   });
@@ -129,7 +130,7 @@ function netAssetBuilder(text) {
   const rows = category_data.split("\n");
   rows.some(function (row_str) {
     let row = row_str.split(" ").filter((r) => r !== "");
-    if (row.length == 3 && row[0] == "純資産合計") {
+    if (row.length == 3 && ["純資産合計", "資本合計"].includes(row[0])) {
       amount_net_asset = row[2];
     } else if (row.length == 3 && row[0] == category_end) {
       return true; // ループ終了
