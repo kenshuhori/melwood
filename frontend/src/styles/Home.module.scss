@@ -8,7 +8,7 @@
   margin-bottom: 1.5rem;
 }
 .conceptImg {
-  height: 360px;
+  height: 340px;
 }
 
 .title {
@@ -18,7 +18,7 @@
   text-align: center;
 }
 .description {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 0 2.5rem;
 }
 
@@ -31,8 +31,8 @@
   padding: 30px;
 }
 .previewImg {
-  max-width: 320px; // 600px - padding
-  max-height: 320px; // 600px - padding
+  max-width: 300px; // 600px - padding
+  max-height: 300px; // 600px - padding
   box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
   background-color: #ffffff;
 }
@@ -88,6 +88,8 @@
 }
 
 .ocrResult {
+  display: flex;
+  justify-content: space-around;
   min-height: 200px;
 }
 

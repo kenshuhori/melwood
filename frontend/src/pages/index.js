@@ -5,12 +5,13 @@ import styles from "src/styles/Home.module.scss";
 import { PiChart } from "src/components/PiChart";
 import { Header } from "src/components/Header";
 import { ContentWrapper } from "src/components/ContentWrapper";
+import { Link as Scroll } from 'react-scroll';
 import ReactLoading from "react-loading";
 import axios from "axios";
 
 const Home = () => {
   const [file, setFile] = useState();
-  const [ocrText, setOcrText] = useState();
+  const [nowAnalyzing, setNowAnalyzing] = useState();
   const [previewImage, setPreviewImage] = useState();
   const [irObj, setIrObj] = useState();
   const chartRef = useRef();
@@ -50,6 +51,7 @@ const Home = () => {
 
   const postRequest = async () => {
     if (!isFileSet) return;
+    setNowAnalyzing(true);
     const formData = new FormData();
     formData.append("myImage", file);
 
@@ -63,16 +65,18 @@ const Home = () => {
         },
       },
     })
-      .then((res) => {
-        console.log("ファイル送信成功！！！");
+    .then((res) => {
+      console.log("ファイル送信成功！！！");
 
-        // 決算データのオブジェクトを受け取って、setStateする
-        console.log(res.data);
-        setIrObj(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      // 決算データのオブジェクトを受け取って、setStateする
+      console.log(res.data);
+      setNowAnalyzing(false);
+      setIrObj(res.data);
+    })
+    .catch((err) => {
+      setNowAnalyzing(false);
+      console.log(err);
+    });
   };
 
   const changeImage = (e) => {
@@ -120,52 +124,65 @@ const Home = () => {
               <label className={styles.fileButtonLabel} htmlFor="fileButton">
                 ファイルを選択する
               </label>
-              <button
-                className={styles.analysisButton}
-                onClick={() => postRequest()}
-                // onClick={() => handleClick()}
-                disabled={!isFileSet}
-              >
-                画像解析
-              </button>
-            </div>
-            <div className={styles.ocrResult} ref={ocrTextRef}>
-              {ocrText}
-              {ocrText == "OCR解析中..." ? (
-                <Loading type="bubbles" color="#888888" />
+              {isFileSet ? (
+                <Scroll
+                  className={styles.analysisButton}
+                  onClick={() => postRequest()}
+                  disabled={!isFileSet}
+                  to="irResult" smooth={true}
+                >
+                  画像解析
+                </Scroll>
               ) : (
-                <div></div>
+                <button
+                  className={styles.analysisButton}
+                  disabled={true}
+                >
+                  画像解析
+                </button>
               )}
             </div>
           </main>
         </ContentWrapper>
       </section>
 
-      {irObj && (
-        <section className={styles.contentContainer}>
-          <ContentWrapper>
-            {/* グラフの左端に合わせたい */}
-
-            <h3 className={styles.content__title}>Analyzing</h3>
-          </ContentWrapper>
-          <div className={styles.graphs}>
-            <div className={styles.graph}>
-              {irObj && <PiChart title="資産の部" data={assetRatio} />}
-            </div>
-            <div className={styles.graph}>
-              {irObj && <PiChart title="負債の部" data={liabilityRatio} />}
-            </div>
-            <div className={styles.graph}>
-              {irObj && <PiChart title="貸借対照表" data={BsRatio} />}
-            </div>
-            <div className={styles.graph}>
-              {irObj && (
-                <PiChart title="貸借対照表（詳細）" data={BsDetailRatio} />
-              )}
+      <section id="irResult" className={styles.contentContainer}>
+        {irObj && (
+          <div>
+            <ContentWrapper>
+              {/* グラフの左端に合わせたい */}
+              <h3 className={styles.content__title}>Analyzing</h3>
+            </ContentWrapper>
+            <div className={styles.graphs}>
+              <div className={styles.graph}>
+                {irObj && <PiChart title="資産の部" data={assetRatio} />}
+              </div>
+              <div className={styles.graph}>
+                {irObj && <PiChart title="負債の部" data={liabilityRatio} />}
+              </div>
+              <div className={styles.graph}>
+                {irObj && <PiChart title="貸借対照表" data={BsRatio} />}
+              </div>
+              <div className={styles.graph}>
+                {irObj && (
+                  <PiChart title="貸借対照表（詳細）" data={BsDetailRatio} />
+                )}
+              </div>
             </div>
           </div>
-        </section>
-      )}
+        )}
+        {nowAnalyzing && (
+          <div>
+            <ContentWrapper>
+              {/* グラフの左端に合わせたい */}
+              <h3 className={styles.content__title}>Analyzing</h3>
+            </ContentWrapper>
+            <div className={styles.ocrResult}>
+              <Loading type="bubbles" color="#888888" />
+            </div>
+          </div>
+        )}
+      </section>
     </>
   );
 };
