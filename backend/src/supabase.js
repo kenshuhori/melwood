@@ -8,6 +8,13 @@ exports.readAll = async function (tablename) {
     .select('*')
   return results
 };
+exports.read = async function (tablename, eq) {
+  let { data: results, error } = await supabase
+    .from(tablename)
+    .select('*')
+    .eq(eq.column, eq.value)
+  return results
+};
 exports.insertRow = async function (tablename, values) {
   const { data, error } = await supabase
     .from(tablename)

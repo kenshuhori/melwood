@@ -4,7 +4,7 @@ const app = express();
 const path = require("path");
 const multer = require("multer");
 const { getData } = require("./pdf");
-const { readAll, insertRow } = require("./supabase");
+const { readAll, read, insertRow } = require("./supabase");
 
 app.use(cors());
 
@@ -25,15 +25,18 @@ let obj;
 app.post("/", (req, res, next) => {
   upload(req, res, async (error) => {
     obj = await getData(req.file.path);
+    let company = obj["company"]
+    let company_exist = await read("companies", {column: "code", value: company["code"]})
+    if(!company_exist.length) {
+      let company_inserted = await insertRow("companies", {
+        name: company["name"],
+        code: company["code"]
+      })
+    }
     res.json(obj);
   });
 });
 
 app.listen(4000, () => {
   console.log(" 4000 でサーバー立ち上げ中....");
-  // const supabaseTest = async () => {
-  //   users = await readAll("users");
-  //   console.log(users);
-  // };
-  // supabaseTest();
 });
