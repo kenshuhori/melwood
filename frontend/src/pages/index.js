@@ -13,6 +13,7 @@ const Home = () => {
   const [file, setFile] = useState();
   const [nowAnalyzing, setNowAnalyzing] = useState();
   const [previewImage, setPreviewImage] = useState();
+  const [company, setCompany] = useState();
   const [irObj, setIrObj] = useState();
   const chartRef = useRef();
   const ocrTextRef = useRef();
@@ -67,11 +68,9 @@ const Home = () => {
     })
     .then((res) => {
       console.log("ファイル送信成功！！！");
-
-      // 決算データのオブジェクトを受け取って、setStateする
-      console.log(res.data);
       setNowAnalyzing(false);
-      setIrObj(res.data);
+      setCompany(res.data["company"]);
+      setIrObj(res.data["balanceSheetObject"]);
     })
     .catch((err) => {
       setNowAnalyzing(false);
@@ -152,6 +151,30 @@ const Home = () => {
             <ContentWrapper>
               {/* グラフの左端に合わせたい */}
               <h3 className={styles.content__title}>Analyzing</h3>
+            </ContentWrapper>
+            <ContentWrapper>
+              <div className={styles.form}>
+                <div className={styles.row}>
+                  <div className={styles.inputRow}>
+                    <label for="companyYear">年度</label>
+                    <input type="text" id="companyYear" value={company.year}/>
+                  </div>
+                  <div className={styles.inputRow}>
+                    <label for="companyQuarter">期</label>
+                    <input type="text" id="companyQuarter" value={company.quarter}/>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.inputRow}>
+                    <label for="companyName">上場会社名</label>
+                    <input type="text" id="companyName" value={company.name}/>
+                  </div>
+                  <div className={styles.inputRow}>
+                    <label for="companyCode">コード番号</label>
+                    <input type="text" id="companyCode" value={company.code}/>
+                  </div>
+                </div>
+              </div>
             </ContentWrapper>
             <div className={styles.graphs}>
               <div className={styles.graph}>

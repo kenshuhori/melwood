@@ -93,6 +93,33 @@
   min-height: 200px;
 }
 
+.form {
+  display: grid;
+
+  .row {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+.inputRow {
+  display: inline-grid;
+  margin-bottom: 6px;
+
+  label {
+    font: 8pt bold;
+  }
+
+  input {
+    width: 100%; /*親要素いっぱい広げる*/
+    padding: 6px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+  }
+}
+
 .contentContainer {
   padding: 2rem 0 4.5rem;
   background: #f1f5f9;
