@@ -21,6 +21,7 @@ const Home = () => {
     <ReactLoading type={type} color={color} height={100} width={200} />
   );
   const isFileSet = file ? true : false;
+  const appUrl = process.env.APP_URL;
 
   const assetRatio = irObj && [
     ["Asset", "Amount per TotalAsset"],
@@ -59,7 +60,7 @@ const Home = () => {
 
     axios({
       method: "POST",
-      url: "http://localhost:4000",
+      url: appUrl,
       data: formData,
       config: {
         headers: {

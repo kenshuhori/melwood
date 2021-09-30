@@ -39,6 +39,10 @@ app.post("/", (req, res, next) => {
   });
 });
 
+app.get("/", (req, res, next) => {
+  console.log(`melwood-backend is running port at ${port}`)
+})
+
 app.listen(port, () => {
   console.log(`${port} でサーバー立ち上げ中....`);
 });
