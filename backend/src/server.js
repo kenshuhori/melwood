@@ -8,6 +8,8 @@ const { readAll, read, insertRow } = require("./supabase");
 
 app.use(cors());
 
+const port = process.env.PORT || 4000;
+
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
@@ -37,6 +39,6 @@ app.post("/", (req, res, next) => {
   });
 });
 
-app.listen(4000, () => {
-  console.log(" 4000 でサーバー立ち上げ中....");
+app.listen(port, () => {
+  console.log(`${port} でサーバー立ち上げ中....`);
 });

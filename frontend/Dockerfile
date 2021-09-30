@@ -1,5 +1,5 @@
 FROM node:12
 WORKDIR /app
-COPY package*.json ./
-COPY jsconfig.json ./
+COPY . /app/
 RUN npm install
+CMD [ "npm", "run", "start" ]
