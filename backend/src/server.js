@@ -29,7 +29,7 @@ app.post("/", (req, res, next) => {
     obj = await getData(req.file.path);
     let company = obj["company"]
     let company_exist = await read("companies", {column: "code", value: company["code"]})
-    if(!company_exist.length) {
+    if(!company_exist) {
       let company_inserted = await insertRow("companies", {
         name: company["name"],
         code: company["code"]

@@ -61,6 +61,7 @@ const Home = () => {
     axios({
       method: "POST",
       url: appUrl,
+      // url: "/api/hello",
       data: formData,
       config: {
         headers: {
@@ -118,7 +119,7 @@ const Home = () => {
               <input
                 className={styles.fileButton}
                 type="file"
-                name="myImage"
+                name="IRStatementPDF"
                 id="fileButton"
                 onChange={(e) => changeImage(e)}
               />
