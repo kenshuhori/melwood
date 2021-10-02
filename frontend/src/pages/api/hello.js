@@ -1,5 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
+import { getData } from "../../modules/pdf";
+import { readAll, read, insertRow } from "../../modules/supabase";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -19,8 +21,17 @@ const apiRoute = nextConnect({
 
 apiRoute.use(upload.single('IRStatementPDF'));
 
-apiRoute.post((req, res) => {
-  res.status(200).json({ data: 'success' });
+apiRoute.post(async (req, res) => {
+  let obj = await getData(req.file.path);
+  let company = obj["company"]
+  let company_exist = await read("companies", {column: "code", value: company["code"]})
+  if(!company_exist) {
+    let company_inserted = await insertRow("companies", {
+      name: company["name"],
+      code: company["code"]
+    })
+  }
+  res.status(200).json(obj);
 });
 
 export default apiRoute;

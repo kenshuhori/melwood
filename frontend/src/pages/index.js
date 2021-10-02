@@ -21,7 +21,6 @@ const Home = () => {
     <ReactLoading type={type} color={color} height={100} width={200} />
   );
   const isFileSet = file ? true : false;
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:4000';
 
   const assetRatio = irObj && [
     ["Asset", "Amount per TotalAsset"],
@@ -56,12 +55,11 @@ const Home = () => {
     setIrObj(null);
     setNowAnalyzing(true);
     const formData = new FormData();
-    formData.append("myImage", file);
+    formData.append("IRStatementPDF", file);
 
     axios({
       method: "POST",
-      url: appUrl,
-      // url: "/api/hello",
+      url: "/api/hello",
       data: formData,
       config: {
         headers: {

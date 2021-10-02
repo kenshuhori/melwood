@@ -10,7 +10,7 @@ services:
       - ./backend/src:/app/src
       - ./backend/public:/app/public
     env_file:
-      - ./backend/.env
+      - .env
     working_dir: /app
     command: npm run start
 
@@ -22,5 +22,7 @@ services:
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
+    env_file:
+      - .env
     working_dir: /app
     command: npm run dev
