@@ -1,6 +1,6 @@
 # melwood
 
-node-js でアプリを作るために作成。
+https://melwood.herokuapp.com
 
 ### melwood とは
 
@@ -11,6 +11,13 @@ node-js でアプリを作るために作成。
 
 1. docker build . -t melwood
 2. bash docker.sh
+
+# How To Deploy on Heroku
+
+1. heroku login
+2. heroku container:login
+3. heroku container:push web -a melwood
+4. heroku container:release web -a melwood
 
 # 今後の予定
 
