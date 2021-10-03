@@ -23,7 +23,6 @@ apiRoute.use(upload.single('IRStatementPDF'));
 
 apiRoute.post(async (req, res) => {
   let pdf = await getData(req.file.path);
-  let statement = pdf["balanceSheetObject"]
   let company = await read("companies", {column: "code", value: pdf["company"]["code"]})[0]
   if (!company) {
     let company_upserted = await upsertRow("companies", {
@@ -36,13 +35,13 @@ apiRoute.post(async (req, res) => {
     company_id: company.id,
     year: pdf["company"]["year"],
     quarter: pdf["company"]["quarter"],
-    amount_current_asset: statement["流動資産合計"],
-    amount_fixed_asset: statement["固定資産合計"],
-    amount_all_asset: statement["資産合計"],
-    amount_current_liability: statement["流動負債合計"],
-    amount_fixed_liability: statement["固定負債合計"],
-    amount_all_liability: statement["負債合計"],
-    amount_net_asset: statement["純資産合計"]
+    amount_current_asset: pdf["balanceSheetObject"]["流動資産合計"],
+    amount_fixed_asset: pdf["balanceSheetObject"]["固定資産合計"],
+    amount_all_asset: pdf["balanceSheetObject"]["資産合計"],
+    amount_current_liability: pdf["balanceSheetObject"]["流動負債合計"],
+    amount_fixed_liability: pdf["balanceSheetObject"]["固定負債合計"],
+    amount_all_liability: pdf["balanceSheetObject"]["負債合計"],
+    amount_net_asset: pdf["balanceSheetObject"]["純資産合計"]
   })
   res.status(200).json(pdf);
 });
