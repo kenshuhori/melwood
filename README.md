@@ -9,8 +9,7 @@ https://melwood.herokuapp.com
 
 # How To Start
 
-1. docker build . -t melwood
-2. bash docker.sh
+1. docker-compose up
 
 # How To Deploy on Heroku
 
