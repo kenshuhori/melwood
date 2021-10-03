@@ -139,7 +139,7 @@ function netAssetBuilder(text) {
   return new NetAsset(amount_net_asset);
 }
 
-exports.getData = async function (filename) {
+exports.readPDF = async function (filename) {
   return new Promise((resolve, reject) => {
     let balanceSheetObject;
     if (process.argv.length > 1) {

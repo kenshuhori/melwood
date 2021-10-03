@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
-import { getData } from "../../modules/pdf";
+import { readPDF } from "../../modules/pdf";
 import { readAll, read, upsertRow } from "../../modules/supabase";
 
 const upload = multer({
@@ -22,7 +22,7 @@ const apiRoute = nextConnect({
 apiRoute.use(upload.single('IRStatementPDF'));
 
 apiRoute.post(async (req, res) => {
-  let pdf = await getData(req.file.path);
+  let pdf = await readPDF(req.file.path);
   let company = await read("companies", {column: "code", value: pdf["company"]["code"]})[0]
   if (!company) {
     let company_upserted = await upsertRow("companies", {
