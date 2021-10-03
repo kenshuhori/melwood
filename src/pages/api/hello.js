@@ -31,7 +31,7 @@ apiRoute.post(async (req, res) => {
     })
     company = company_upserted[0];
   }
-  let statement_upserted = await upsertRow("statements", {
+  await upsertRow("statements", {
     company_id: company.id,
     year: pdf["company"]["year"],
     quarter: pdf["company"]["quarter"],
