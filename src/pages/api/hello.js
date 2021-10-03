@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import { getData } from "../../modules/pdf";
-import { readAll, read, insertRow } from "../../modules/supabase";
+import { readAll, read, upsertRow } from "../../modules/supabase";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -22,16 +22,29 @@ const apiRoute = nextConnect({
 apiRoute.use(upload.single('IRStatementPDF'));
 
 apiRoute.post(async (req, res) => {
-  let obj = await getData(req.file.path);
-  let company = obj["company"]
-  let company_exist = await read("companies", {column: "code", value: company["code"]})
-  if(!company_exist) {
-    let company_inserted = await insertRow("companies", {
-      name: company["name"],
-      code: company["code"]
+  let pdf = await getData(req.file.path);
+  let statement = pdf["balanceSheetObject"]
+  let company = await read("companies", {column: "code", value: pdf["company"]["code"]})[0]
+  if (!company) {
+    let company_upserted = await upsertRow("companies", {
+      name: pdf["company"]["name"],
+      code: pdf["company"]["code"]
     })
+    company = company_upserted[0];
   }
-  res.status(200).json(obj);
+  let statement_upserted = await upsertRow("statements", {
+    company_id: company.id,
+    year: pdf["company"]["year"],
+    quarter: pdf["company"]["quarter"],
+    amount_current_asset: statement["流動資産合計"],
+    amount_fixed_asset: statement["固定資産合計"],
+    amount_all_asset: statement["資産合計"],
+    amount_current_liability: statement["流動負債合計"],
+    amount_fixed_liability: statement["固定負債合計"],
+    amount_all_liability: statement["負債合計"],
+    amount_net_asset: statement["純資産合計"]
+  })
+  res.status(200).json(pdf);
 });
 
 export default apiRoute;

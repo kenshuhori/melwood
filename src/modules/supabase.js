@@ -15,9 +15,9 @@ exports.read = async function (tablename, eq) {
     .eq(eq.column, eq.value)
   return results
 };
-exports.insertRow = async function (tablename, values) {
+exports.upsertRow = async function (tablename, values) {
   const { data, error } = await supabase
     .from(tablename)
-    .insert([values])
+    .insert([values], { upsert: true })
   return data
 };
